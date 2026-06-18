@@ -1,0 +1,897 @@
+/* =========================
+   BASE / RESET
+========================= */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100dvh;
+    height: 100dvh;
+    overflow: hidden;
+    background: black;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+}
+
+/* Contenedor principal escalado */
+#app {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%) scale(var(--scale, 1));
+    transform-origin: center;
+}
+
+/* Fondo atmosférico */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,0,0,0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* =========================
+   SCENES
+========================= 
+
+.scene {
+    position: absolute;
+    inset: 0;
+
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+
+    justify-content: center;
+    align-items: center;
+
+    background: black;
+    z-index: 0;
+}
+
+.scene.active {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    z-index: 10;
+}
+
+/* =========================
+   CARD BASE
+========================= 
+
+.card {
+    padding: 40px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255,0,0,0.08);
+}
+
+/* =========================
+   INTRO
+========================= 
+
+#intro h3 {
+    color: #ff3b3b;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+#intro h1 {
+    font-size: 48px;
+    letter-spacing: 4px;
+}
+
+/* BUTTON 
+#startBtn {
+    margin-top: 20px;
+    padding: 14px 28px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: transparent;
+    color: white;
+    border: 2px solid #ff3b3b;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#startBtn:hover {
+    background: #ff3b3b;
+    color: black;
+}
+
+/* =========================
+   LIGHTS
+========================= 
+
+.light {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #111;
+    border: 2px solid #333;
+}
+
+.light.on {
+    background: red;
+    box-shadow: 0 0 25px red;
+}
+
+.lights-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.lights-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* =========================
+   RACE LAYOUT
+========================= 
+
+#race {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    background: black;
+}
+
+/* =========================
+   TRACK
+========================= 
+
+@keyframes moveTrack {
+    from { background-position: 0 0; }
+    to { background-position: 0 60px; }
+}
+
+#track {
+    flex: 0 0 40%;
+    position: relative;
+    overflow: hidden;
+
+    background: radial-gradient(
+        circle at top,
+        rgba(255,0,0,0.08),
+        transparent 40%
+    ),
+    linear-gradient(to bottom, #090909, #020202);
+}
+
+#track::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) perspective(600px) rotateX(55deg);
+
+    width: 100%;
+    height: 140%;
+
+    clip-path: polygon(
+        42% 0%,
+        58% 0%,
+        100% 100%,
+        0% 100%
+    );
+
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #2d2d2d 0px,
+        #2d2d2d 30px,
+        #1a1a1a 30px,
+        #1a1a1a 60px
+    );
+
+    background-size: 100% 60px;
+    animation: moveTrack 0.15s linear infinite;
+}
+
+#track::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    transform: translateX(-50%) perspective(600px) rotateX(55deg);
+
+    background: linear-gradient(
+        to right,
+        transparent 48%,
+        rgba(255,255,255,0.35) 48%,
+        rgba(255,255,255,0.35) 52%,
+        transparent 52%
+    );
+}
+
+/* =========================
+   FINISH
+========================= 
+
+#finishLine {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%);
+
+    width: 60%;
+    height: 15px;
+
+    background: repeating-linear-gradient(
+        90deg,
+        white 0px,
+        white 10px,
+        black 10px,
+        black 20px
+    );
+
+    box-shadow: 0 0 8px white, 0 0 20px red;
+}
+
+/* =========================
+   HUD
+========================= 
+
+#hudZone {
+    flex: 1;
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding: 20px;
+    gap: 40px;
+
+    background: black;
+    box-shadow: 0 0 calc(var(--hudGlow) * 40px) rgba(255,0,0,0.25);
+}
+
+.side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    flex: 0 0 30%;
+    max-width: 350px;
+
+    font-family: monospace;
+    font-size: 18px;
+
+    opacity: 0.6;
+}
+
+.glass {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,0,0,0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+
+    padding: 12px;
+}
+
+/* cockpit 
+#cockpit {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* SPEED 
+#speedCenter {
+    font-size: 80px;
+    font-weight: bold;
+    color: white;
+}
+
+/* =========================
+   FINAL SCENE FIX (IMPORTANTE)
+========================= 
+
+#final {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    background: radial-gradient(circle at center, #0a0a0a, black);
+}
+
+.final-report {
+    width: 70%;
+    max-width: 700px;
+
+    padding: 40px;
+
+    border-radius: 12px;
+    border: 1px solid rgba(255,0,0,0.2);
+
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 0 40px rgba(255,0,0,0.15);
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* textos centrados 
+.report-title,
+.report-status {
+    text-align: center;
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.report-item p {
+    font-size: 16px;
+    color: white;
+}
+
+/* reward oculto inicial 
+#finalReward {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+
+    opacity: 0;
+    transform: scale(0.95);
+}*/
+
+/*#app {
+    transform: scale(var(--scale));
+    transform-origin: top center;
+    width: 1100px;
+    height: 700px;
+}
+
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Fondo atmosférico 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,0,0,0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+}*/
+
+/* SCENES */
+.scene {
+    position: absolute;
+    inset: 0;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+
+    background: black;
+}
+
+.scene.active {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    z-index: 10;
+}
+
+/* CARD */
+.card {
+    padding: 40px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255,0,0,0.08);
+}
+
+/* INTRO */
+#intro h3 {
+    color: #ff3b3b;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+
+#intro h1 {
+    font-size: 48px;
+    letter-spacing: 4px;
+}
+
+/* BUTTON */
+#startBtn {
+    margin-top: 20px;
+    padding: 14px 28px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: transparent;
+    color: white;
+    border: 2px solid #ff3b3b;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#startBtn:hover {
+    background: #ff3b3b;
+    color: black;
+}
+
+/* LIGHTS */
+.light {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #111;
+    border: 2px solid #333;
+}
+
+.light.on {
+    background: red;
+    box-shadow: 0 0 25px red;
+}
+
+.lights-row {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+.lights-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+/* =========================
+   RACE LAYOUT
+========================= */
+
+#race {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: stretch;
+    overflow: hidden;
+
+    background: black;
+}
+
+/* =========================
+   TRACK (CARRETERA REALISTA)
+========================= */
+
+@keyframes moveTrack {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 0 60px;
+    }
+}
+
+#track {
+    flex: 0 0 40%;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(
+        circle at top,
+        rgba(255,0,0,0.08),
+        transparent 40%
+    ),
+    linear-gradient(to bottom, #090909, #020202);
+}
+
+#track::before {
+    content: "";
+    position: absolute;
+    
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) perspective(600px) rotateX(55deg);
+
+    width: 100%;
+    height: 140%;
+
+    clip-path: polygon(
+        42% 0%,
+        58% 0%,
+        100% 100%,
+        0% 100%
+    );
+
+    background-image: repeating-linear-gradient(
+        to bottom,
+        #2d2d2d 0px,
+        #2d2d2d 30px,
+        #1a1a1a 30px,
+        #1a1a1a 60px
+    );
+
+    background-size: 100% 60px;
+    background-position: 0 0;
+    background-repeat: repeat;
+
+    animation: moveTrack 0.15s linear infinite;
+    transform-origin: center;
+}
+
+#track::after {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) perspective(600px) rotateX(55deg);
+    width: 140%;
+    height: 140%;
+
+
+    clip-path: polygon(
+        42% 0%,
+        58% 0%,
+        100% 100%,
+        0% 100%
+    );
+
+    background:
+        linear-gradient(to right,
+            transparent 0%,
+            transparent 48%,
+            rgba(255,255,255,0.35) 48%,
+            rgba(255,255,255,0.35) 52%,
+            transparent 52%
+        );
+
+    transform-origin: center;
+    pointer-events: none;
+}
+
+#finishLine {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    /*transform: translateX(-50%) perspective(600px) rotateX(55deg);*/
+    transform: translate(-50%, -100%);
+
+    width: 60%;
+    height: 15px;
+
+    background: repeating-linear-gradient(
+        90deg,
+        white 0px,
+        white 10px,
+        black 10px,
+        black 20px
+    );
+
+    box-shadow:
+        0 0 8px white,
+        0 0 20px red;
+
+    z-index: 5;
+    transition: none;
+}
+
+#finishText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-size: 90px;
+    letter-spacing: 12px;
+    color: red;
+    font-weight: bold;
+
+    opacity: 0;
+    z-index: 10;
+
+    text-shadow: 0 0 20px red, 0 0 40px red;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+/* paneles */
+
+#hudZone {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    gap:40px;
+
+    background: black; 
+    transition: box-shadow 0.1s linear;
+    box-shadow: 0 0 calc(var(--hudGlow) * 40px) rgba(255,0,0,0.25);
+}
+
+#hudZone::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at bottom,
+        rgba(255, 0, 0, 0.10),
+        transparent 60%
+    );
+    pointer-events: none;
+}
+
+#hudZone::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        circle at center bottom,
+        transparent,
+        rgba(0,0,0,0.4)
+    );
+    pointer-events: none;
+}
+
+.side {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    flex: 0 0 30%;
+    max-width: 350px;
+
+    font-family: monospace;
+    font-size: 18px;   
+    line-height: 1.4;
+
+    padding: 20px;
+    align-items: flex-start;
+
+    opacity: 0.6;
+}
+
+.panel {
+    padding: 18px;
+    border-radius: 14px;
+}
+
+.glass {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,0,0,0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+    padding: 12px;
+
+    transition: box-shadow 0.1s linear, border-color 0.1s linear;
+    border-color: rgba(255, 0, 0, calc(var(--hudGlow) * 0.4));
+    box-shadow:
+        0 0 calc(var(--hudGlow) * 20px) rgba(255,0,0,0.15);
+    /*box-shadow:
+        0 0 12px rgba(255, 0, 0, 0.08),
+        inset 0 0 10px rgba(255, 255, 255, 0.02);*/
+}
+
+
+
+.left { text-align: left; }
+
+
+/* cockpit */
+#cockpit {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    transition: filter 0.1s linear;
+    filter: drop-shadow(0 0 calc(var(--hudGlow) * 20px) rgba(255,0,0,0.4));
+}
+
+#cockpit::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    background: radial-gradient(
+        circle at center,
+        rgba(255,0,0,0.10),
+        transparent 60%
+    );
+    z-index: -1;
+}
+
+/* pilot and car titles */
+.side .car-title,
+.side .pilot-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.metric span {
+    color: #ff3b3b;
+}
+
+.pilot-status {
+    margin-top: 15px;
+    font-size: 16px;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* speed */
+#speedCenter {
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 0 12px rgba(255,0,0,0.25);
+    font-size: 80px;
+    font-weight: bold;
+    transition: transform 0.08s linear;
+}
+
+#gearIndicator {
+    font-size: 24px;
+    opacity: 0.7;
+}
+
+/* RPM */
+#rpmGauge {
+    width: 220px;
+    height: 140px;
+}
+
+#needle {
+    transform-origin: 100px 100px;
+    transition: transform 0.1s linear;
+}
+
+
+
+#final {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100dvh;
+    background: radial-gradient(circle at center, #0a0a0a, black);
+}
+
+.final-report {
+    width: 70%;
+    max-width: 700px;
+    padding: 40px;
+    border: 1px solid rgba(255,0,0,0.2);
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 40px rgba(255,0,0,0.15);
+    border-radius: 12px;
+    animation: fadeIn 0.6s ease;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.report-title {
+    font-size: 26px;
+    color: red;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 15px red;
+    text-align: center;
+}
+
+.report-status {
+    font-size: 20px;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    text-align: center;
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.report-item span {
+    font-size: 12px;
+    opacity: 0.6;
+    letter-spacing: 2px;
+}
+
+.report-item p {
+    margin: 5px 0 0;
+    font-size: 16px;
+    color: #fff;
+    opacity: 0.9;
+    letter-spacing: 2px;
+}
+
+#finalAnalysis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#finalReward {
+    opacity: 0;
+    transform: scale(0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#finalDesc2 {
+    text-align: left;
+    font-family: monospace;
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>F1 Experience</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+
+<div id="app">
+
+    <div id="intro" class="scene active">
+        <div class="card">
+            <h3>¡Bienvenido piloto!</h3>
+            <h1>MISIÓN CLASIFICADA</h1>
+            <p>Piloto seleccionado</p>
+            <p>Circuito: Clasificado</p>
+
+            <button id="startBtn">ACCEDER AL BRIEFING</button>
+        </div>
+    </div>
+
+    <div id="lights" class="scene">
+        <div class="lights-container">
+            <div class="lights-row">
+                <div class="light" id="l1"></div>
+                <div class="light" id="l2"></div>
+                <div class="light" id="l3"></div>
+                <div class="light" id="l4"></div>
+                <div class="light" id="l5"></div>
+            </div>
+
+            <h2 id="lightsText">PREPARANDO SALIDA</h2>
+        </div>
+    </div>
+
+    <div id="race" class="scene">
+
+        <div id="track">
+            <div id="finishLine"></div>
+            <div id="finishText">META</div>    
+        </div>
+
+        <div id="hudZone">
+
+            <!-- IZQUIERDA: análisis piloto -->
+            <div id="pilotPanel" class="side left">
+
+                <div class="pilot-title">ANÁLISIS DEL PILOTO</div>
+
+                <div class="metric">
+                    REFLEJOS: <span id="reflexes">ÓPTIMOS</span>
+                </div>
+
+                <div class="metric">
+                    PRECISIÓN: <span id="precision">ESTABLE</span>
+                </div>
+
+                <div class="metric">
+                    ESTRÉS: <span id="stress">BAJO</span>
+                </div>
+
+                <div class="metric">
+                    CONSISTENCIA: <span id="consistency">ALTA</span>
+                </div>
+
+                <div class="metric">
+                    RIESGO: <span id="risk">CONTROLADO</span>
+                </div>
+
+                <div class="pilot-status" id="pilotStatus">
+                    Analizando piloto...
+                </div>
+
+            </div>
+
+            <!-- CENTRO: cockpit -->
+            <div id="cockpit" class="panel glass">
+
+                <div id="speedCenter">0</div>
+
+                <div id="gearIndicator">N</div>
+
+                <svg id="rpmGauge" viewBox="0 0 200 120">
+                    <path id="arc" d="M10,100 A90,90 0 0,1 190,100"
+                        stroke="#222" stroke-width="10" fill="none"/>
+
+                    <path id="arcFill" d="M10,100 A90,90 0 0,1 190,100"
+                        stroke="red" stroke-width="10" fill="none"
+                        stroke-dasharray="0 999"/>
+                    
+                    <line id="needle" x1="100" y1="100" x2="100" y2="20"
+                        stroke="white" stroke-width="3"/>
+                </svg>
+
+            </div>
+
+            <!-- DERECHA: sistemas del coche -->
+            <div id="carPanel" class="side right">
+                <div class="car-title">ANÁLISIS DEL COCHE</div>
+                <div>NEUMÁTICOS: <span id="tyres">OK</span></div>
+                <div>ERS: <span id="ers">80%</span></div>
+                <div>DRS: <span id="drs">OFF</span></div>
+                <div>TEMP: <span id="temp">92º</span></div>
+            </div>
+
+        </div>    
+
+    </div>
+
+    <div id="final" class="scene">
+
+        <!-- FASE 1 -->
+        <div id="finalAnalysis" class="final-report">
+            <div class="report-title">🏁 PASE DE PILOTO COMPLETADO</div>
+
+            <div class="report-status" id="finalStatusBig">
+                ESTADO: ÓPTIMO
+            </div>
+
+            <div class="report-item">
+                <span>RESUMEN</span>
+                <p id="finalDesc"></p>
+            </div>
+        </div>
+
+         <!-- FASE 2 -->
+        <div id="finalReward" class="final-report" style="display:none;">
+            <div class="report-title">🎁 F1 ARCADE PASS</div>
+
+            <div class="report-status">
+                HEAD TO HEAD MODE UNLOCKED
+            </div>
+
+            <div class="report-grid">
+
+                <div class="report-item">
+                    <span>FECHA</span>
+                    <p id="finalDate">27 - 06 - 2026</p>
+                </div>
+
+                <div class="report-item">
+                    <span>CIRCUITO</span>
+                    <p id="finalCircuit">Madrid - F1 Arcade</p>
+                </div>
+
+                <div class="report-item">
+                    <span>MODALIDAD</span>
+                    <p>5 CARRERAS</p>
+                </div>
+
+                <div class="report-item">
+                    <span>FORMATO</span>
+                    <p>HEAD TO HEAD - 1v1 SIMULACIÓN</p>
+                </div>
+
+                <div class="report-item">
+                    <span>TRACK SET</span>
+                    <p>SILVERSTONE → SPA</p>
+                </div>
+
+            </div>
+
+            <div class="report-item">
+                <span>DESCRIPCIÓN</span>
+                <p id="finalDesc2">Modo Head to Head activado: competición 1v1 en simulador con múltiples carreras seguidas en circuitos legendarios.</p>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
